@@ -103,3 +103,512 @@ Untuk testing di Cisco Packet Tracer, kita bisa menggunakan tool Add Simple PDU 
 Hasil testing seperti berikut. Jika successful semua maka paket berhasil terkirim.
 
 ![Testing](https://github.com/aryansfw/Jarkom-Modul-4-B18-2023/assets/115603634/38409af6-7ee4-43c2-9f86-bed5ee4dc3ee)
+
+
+# VLSM
+### Topologi
+Untuk metode VLSM menggunakan GNS. Berikut topologi pada GNS.
+
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/2d992ef3-e6a3-49ec-900c-bccce197e386)
+
+### Pohon
+Dari subnet-subnet tersebut, kita bisa membuat pohon VLSM yang digunakan untuk menentukan pembagian IP pada node-node dalam topologi seperti berikut.
+
+![TREE - VLSM (2)](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/2b0ac5f9-7cdf-4c63-97e7-37ec553f7578)
+
+### Tabel Pembagian IP
+Dari IP yang sudah ditentukan akan didapatkan pembagian IP sebagai barikut.
+
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/e25668dd-d7a9-43ab-a9b5-2bb618379d43)
+
+
+
+### Konfigurasi dan Routing
+Lakukan konfigurasi terlebih dahulu setelah mendapatan NID, Netmask dan Broadcast. Lalu Routing dengan menjadikan `AURA` *master*. Dimana `AURA` mengetahui informasi menuju seluruh router, client dan server yang ada. Untuk rute kembalinya pada GNS tidak perlu diatur karena sudah ada default dari GNSnya. Berikut Konfigurasi dan Routing pada setiap node.
+
+**SERVER**
+```sh
+#SERVER SEIN
+#A12
+auto eth0
+iface eth0 inet static
+	address 192.187.16.3
+	netmask 255.255.252.0
+	gateway 192.187.16.1
+```
+
+```sh
+#SERVER RICHTER
+#A13
+auto eth0
+iface eth0 inet static
+	address 192.187.0.146
+	netmask 255.255.255.248
+	gateway 192.187.16.145
+```
+
+```sh
+#SERVER REVOLTE
+#A13
+auto eth0
+iface eth0 inet static
+	address 192.187.0.147
+	netmask 255.255.255.248
+	gateway 192.187.16.145
+```
+
+```sh
+#SERVER STARK
+#A4
+auto eth0
+iface eth0 inet static
+	address 192.187.0.18
+	netmask 255.255.255.252
+	gateway 192.187.0.17
+
+```
+**CLIENT**
+```sh
+#CLIENT ROYAL
+#A2
+auto eth0
+iface eth0 inet static
+	address 192.187.8.2
+	netmask 255.255.255.0
+	gateway 192.187.8.1
+```
+
+```sh
+#CLIENT WR
+#A2
+auto eth0
+iface eth0 inet static
+	address 192.187.8.3
+	netmask 255.255.255.0
+	gateway 192.187.8.1
+```
+
+```sh
+#CLIENT TR
+#A6
+auto eth0
+iface eth0 inet static
+	address 192.187.12.2
+	netmask 255.255.252.0
+	gateway 192.187.12.1
+```
+
+```sh
+#CLIENT GF
+#A7
+auto eth0
+iface eth0 inet static
+	address 192.187.9.2
+	netmask 255.255.255.0
+	gateway 192.187.9.1
+```
+
+```sh
+#CLIENT GC
+#A9
+auto eth0
+iface eth0 inet static
+	address 192.187.10.2
+	netmask 255.255.254.0
+	gateway 192.187.10.1
+```
+
+```sh
+#CLIENT BR
+#A11
+auto eth0
+iface eth0 inet static
+	address 192.187.0.195
+	netmask 255.255.255.192
+	gateway 192.187.0.194
+```
+
+```sh
+#CLIENT RIEGEL
+#A12
+auto eth0
+iface eth0 inet static
+	address 192.187.16.2
+	netmask 255.255.252.0
+	gateway 192.187.16.1
+```
+
+```sh
+#CLIENT LK
+#A15
+auto eth0
+iface eth0 inet static
+	address 192.187.0.162
+	netmask 255.255.255.224
+	gateway 192.187.0.161
+```
+
+```sh
+#CLIENT LH
+#A18
+auto eth0
+iface eth0 inet static
+	address 192.187.24.2
+	netmask 255.255.248.0
+	gateway 192.187.24.1
+```
+
+```sh
+#CLIENT AR
+#A18
+auto eth0
+iface eth0 inet static
+	address 192.187.24.3
+	netmask 255.255.248.0
+	gateway 192.187.24.1
+```
+
+```sh
+#CLIENT RR
+#A19
+auto eth0
+iface eth0 inet static
+	address 192.187.20.2
+	netmask 255.255.252.0
+	gateway 192.187.20.1
+```
+
+```sh
+#CLIENT SM
+#A21
+auto eth1
+iface eth1 inet static
+	address 192.187.0.154
+	netmask 255.255.255.248
+	gateway 192.187.0.153
+```
+
+**ROUTER**
+```sh
+#ROUTER DENKEN
+#A1
+auto eth0
+iface eth0 inet static
+	address 192.187.0.2
+	netmask 255.255.255.252
+	gateway 192.187.0.1
+
+#A2
+auto eth1
+iface eth1 inet static
+	address 192.187.8.1
+	netmask 255.255.255.0
+```
+
+```sh
+#ROUTER LUGNER
+#A5
+auto eth0
+iface eth0 inet static
+	address 192.187.0.22
+	netmask 255.255.255.252
+	gateway 192.187.0.21
+
+#A6
+auto eth1
+iface eth1 inet static
+	address 192.187.12.1
+	netmask 255.255.252.0
+
+#A7
+auto eth2
+iface eth2 inet static
+	address 192.187.9.1
+	netmask 255.255.255.0
+```
+```sh
+#ROUTER HEITER
+#A11
+auto eth0
+iface eth0 inet static
+	address 192.187.0.194
+	netmask 255.255.255.192
+	gateway 192.187.0.193
+
+#A12
+auto eth1
+iface eth1 inet static
+	address 192.187.16.1
+	netmask 255.255.252.0
+```
+
+```sh
+#ROUTER FERN
+#A17
+auto eth0
+iface eth0 inet static
+	address 192.187.0.138
+	netmask 255.255.255.252
+	gateway 192.187.0.137
+
+#A18
+auto eth1
+iface eth1 inet static
+	address 192.187.24.1
+	netmask 255.255.248.0
+```
+
+```sh
+#ROUTER HIMMEL
+#A20
+auto eth0
+iface eth0 inet static
+	address 192.187.0.142
+	netmask 255.255.255.252
+	gateway 192.187.0.141
+
+#A21
+auto eth1
+iface eth1 inet static
+	address 192.187.0.153
+	netmask 255.255.255.248
+```
+```sh
+#ROUTER AURA
+auto eth0
+iface eth0 inet dhcp
+
+#A1
+auto eth1
+iface eth1 inet static
+	address 192.187.0.1
+	netmask 255.255.255.252
+
+#A3
+auto eth2
+iface eth2 inet static
+	address 192.187.0.5
+	netmask 255.255.255.252
+
+#A14
+auto eth3
+iface eth3 inet static
+	address 192.187.0.129
+	netmask 255.255.255.252
+
+----------------------------------------------------------------------
+
+# .BASHRC AURA
+route add -net 192.187.8.0 netmask 255.255.255.0 gw 192.187.0.2
+route add -net 192.187.0.16 netmask 255.255.255.252 gw 192.187.0.6
+route add -net 192.187.0.20 netmask 255.255.255.252 gw 192.187.0.6
+route add -net 192.187.12.0 netmask 255.255.252.0 gw 192.187.0.6
+route add -net 192.187.9.0 netmask 255.255.255.0 gw 192.187.0.6
+route add -net 192.187.0.24 netmask 255.255.255.252 gw 192.187.0.6
+route add -net 192.187.10.0 netmask 255.255.254.0 gw 192.187.0.6
+route add -net 192.187.0.28 netmask 255.255.255.252 gw 192.187.0.6
+route add -net 192.187.0.192 netmask 255.255.255.192 gw 192.187.0.6
+route add -net 192.187.16.0 netmask 255.255.252.0 gw 192.187.0.6
+route add -net 192.187.0.144 netmask 255.255.255.248 gw 192.187.0.6
+route add -net 192.187.0.160 netmask 255.255.255.224 gw 192.187.0.130
+route add -net 192.187.0.132 netmask 255.255.255.252 gw 192.187.0.130
+route add -net 192.187.0.136 netmask 255.255.255.252 gw 192.187.0.130
+route add -net 192.187.24.0 netmask 255.255.248.0 gw 192.187.0.130
+route add -net 192.187.20.0 netmask 255.255.252.0 gw 192.187.0.130
+route add -net 192.187.0.140 netmask 255.255.255.252 gw 192.187.0.130
+route add -net 192.187.0.152 netmask 255.255.255.248 gw 192.187.0.130
+```
+```sh
+#ROUTER EISEN
+#A3 
+auto eth0
+iface eth0 inet static
+	address 192.187.0.6
+	netmask 255.255.255.252
+	gateway 192.187.0.5
+
+#A4
+auto eth1
+iface eth1 inet static
+	address 192.187.0.17
+	netmask 255.255.255.252
+
+#A5
+auto eth2
+iface eth2 inet static
+	address 192.187.0.21
+	netmask 255.255.255.252
+
+#A8
+auto eth3
+iface eth3 inet static
+	address 192.187.0.25
+	netmask 255.255.255.252
+
+#A13
+auto eth4
+iface eth4 inet static
+	address 192.187.0.145
+	netmask 255.255.255.248
+
+----------------------------------------------------------------------
+
+# .BSHRC EISEN
+route add -net 192.187.12.0 netmask 255.255.252.0 gw 192.187.0.22
+route add -net 192.187.9.0 netmask 255.255.255.0 gw 192.187.0.22
+route add -net 192.187.10.0 netmask 255.255.254.0 gw 192.187.0.26
+route add -net 192.187.0.28 netmask 255.255.255.252 gw 192.187.0.26
+route add -net 192.187.0.192 netmask 255.255.255.192 gw 192.187.0.26
+route add -net 192.187.16.0 netmask 255.255.252.0 gw 192.187.0.26
+```
+
+```sh
+#ROUTER LINIE
+#A8
+auto eth0
+iface eth0 inet static
+	address 192.187.0.26
+	netmask 255.255.255.252
+	gateway 192.187.0.25
+
+#A9
+auto eth1
+iface eth1 inet static
+	address 192.187.10.1
+	netmask 255.255.254.0
+
+#A10
+auto eth2
+iface eth2 inet static
+	address 192.187.0.29
+	netmask 255.255.255.252
+
+----------------------------------------------------------------------
+
+# .BASHRC LINIE
+route add -net 192.187.0.192 netmask 255.255.255.252 gw 192.187.0.30
+route add -net 192.187.16.0 netmask 255.255.252.0 gw 192.187.0.30
+```
+
+```sh
+#ROUTER LAWINE
+#A10
+auto eth0
+iface eth0 inet static
+	address 192.187.0.30
+	netmask 255.255.255.252
+	gateway 192.187.0.29
+
+#A11
+auto eth1
+iface eth1 inet static
+	address 192.187.0.193
+	netmask 255.255.255.192
+
+----------------------------------------------------------------------
+
+# .BASHRC LAWINE
+route add -net 192.187.16.0 netmask 255.255.252.0 gw 192.187.0.194
+```
+
+```sh
+#ROUTER FRIEREN
+#A14
+auto eth0
+iface eth0 inet static
+	address 192.187.0.130
+	netmask 255.255.255.252
+	gateway 192.187.0.129
+
+#A15
+auto eth1
+iface eth1 inet static
+	address 192.187.0.161
+	netmask 255.255.255.224
+
+#A16
+auto eth2
+iface eth2 inet static
+	address 192.187.0.133
+	netmask 255.255.255.252
+
+----------------------------------------------------------------------
+
+# .BASHRC FRIEREN
+route add -net 192.187.0.136 netmask 255.255.255.252 gw 192.187.0.134
+route add -net 192.187.24.0 netmask 255.255.248.0 gw 192.187.0.134
+route add -net 192.187.20.0 netmask 255.255.252.0 gw 192.187.0.134
+route add -net 192.187.0.140 netmask 255.255.255.252 gw 192.187.0.134
+route add -net 192.187.0.152 netmask 255.255.255.248 gw 192.187.0.134
+```
+
+```sh
+#ROUTER FLAMME
+#A16
+auto eth0
+iface eth0 inet static
+	address 192.187.0.134
+	netmask 255.255.255.252
+	gateway 192.187.0.133
+
+#A17
+auto eth1
+iface eth1 inet static
+	address 192.187.0.137
+	netmask 255.255.255.252
+
+#A19
+auto eth2
+iface eth2 inet static
+	address 192.187.20.1
+	netmask 255.255.252.0
+
+#A20
+auto eth3
+iface eth3 inet static
+	address 192.187.0.141
+	netmask 255.255.255.252
+
+----------------------------------------------------------------------
+
+# .BASHRC FLAMME
+route add -net 192.187.24.0 netmask 255.255.248.0 gw 192.187.0.138
+route add -net 192.187.0.152 netmask 255.255.255.248 gw 192.187.0.142
+```
+
+### Testing
+- GranzChannel - Eisen
+```sh
+ping 192.187.0.6
+```
+
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/5a560788-2ff6-4ad0-ba62-db46c34f327f)
+
+
+- Aura - LaubHills
+```sh
+ping 192.187.24.2
+```
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/df4a614a-5bd8-4e68-81d0-ceca35b4e23a)
+
+
+- SchweMountains - Stark
+```sh
+ping 192.187.0.18
+```
+
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/60eb47be-eee3-4421-b441-2b82cd360b5b)
+
+
+- RoyalCapital - RiegelCanyon
+```sh
+ping 192.187.16.2
+```
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/99869b33-a3c1-440d-8b14-88d1950a75d0)
+
+
+- AppetitRegion - GrobeForest
+```sh
+ping  192.187.9.2
+```
+![image](https://github.com/aryansfw/Jarkom-Modul-2-B18-2023/assets/114483889/267b9269-0ce5-4794-b6a1-a012a97c6011)
